@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bootstrap Spacing Overrider</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+	<div id="app">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<label for="intervalInUnit">Unit</label>
+					<select class="form-control" v-model="unit">
+						<option>em</option>
+						<option>ex</option>
+						<option>ch</option>
+						<option>cm</option>
+						<option>mm</option>
+						<option>Q</option>
+						<option>rem</option>
+						<option>in</option>
+						<option>pc</option>
+						<option>pt</option>
+						<option>px</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="intervalInUnit">Interval (in {{unit}})</label>
+					<div class="input-group mb-3">
+						<input type="text" id="intervalInUnit" class="form-control" v-model="intervalInUnit">
+						<div class="input-group-append">
+							<span class="input-group-text">{{ unit }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="iteration">Iteration</label>
+						<input type="text" class="form-control" id="iteration" v-model="iteration">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="margin" v-model="margin">
+						<label class="form-check-label" for="margin">Margin</label>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="padding" v-model="padding">
+						<label class="form-check-label" for="padding">Padding</label>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="negativeMargin" v-model="negativeMargin">
+						<label class="form-check-label" for="negativeMargin">Negative Margin</label>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="autoMargin" v-model="autoMargin">
+						<label class="form-check-label" for="autoMargin">Auto Margin</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							Generated CSS
+						</div>
+						<div class="card-body">
+							{{ generatedCSS }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script type="text/javascript">
+
+		var app = new Vue({
+			el: '#app',
+			data: {
+				unit: 'px',
+				intervalInUnit: 4,
+				iteration: 5,
+				margin: true,
+				padding: true,
+				negativeMargin: false,
+				autoMargin: true
+			},
+			computed: {
+				generatedCSS: function() {
+					let cssXS = '';
+					let cssSM = '@media(min-width:576px){';
+					let cssMD = '@media(min-width:768px){';
+					let cssLG = '@media(min-width:992px){';
+					let cssXL = '@media(min-width:1200px){';
+					for (let index = 0; index <= this.iteration; index++) {
+						if(this.margin) {
+							cssXS += '.m-' + index + '{margin:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mt-' + index + ',.my-' + index + '{margin-top:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mr-' + index + ',.mx-' + index + '{margin-right:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mb-' + index + ',.my-' + index + '{margin-bottom:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.ml-' + index + ',.mx-' + index + '{margin-left:' + (index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssSM += '.m-sm-' + index + '{margin:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mt-sm-' + index + ',.my-sm-' + index + '{margin-top:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mr-sm-' + index + ',.mx-sm-' + index + '{margin-right:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mb-sm-' + index + ',.my-sm-' + index + '{margin-bottom:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.ml-sm-' + index + ',.mx-sm-' + index + '{margin-left:' + (index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssMD += '.m-md-' + index + '{margin:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mt-md-' + index + ',.my-md-' + index + '{margin-top:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mr-md-' + index + ',.mx-md-' + index + '{margin-right:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mb-md-' + index + ',.my-md-' + index + '{margin-bottom:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.ml-md-' + index + ',.mx-md-' + index + '{margin-left:' + (index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssLG += '.m-lg-' + index + '{margin:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mt-lg-' + index + ',.my-lg-' + index + '{margin-top:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mr-lg-' + index + ',.mx-lg-' + index + '{margin-right:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mb-lg-' + index + ',.my-lg-' + index + '{margin-bottom:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.ml-lg-' + index + ',.mx-lg-' + index + '{margin-left:' + (index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssXL += '.m-xl-' + index + '{margin:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mt-xl-' + index + ',.my-xl-' + index + '{margin-top:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mr-xl-' + index + ',.mx-xl-' + index + '{margin-right:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mb-xl-' + index + ',.my-xl-' + index + '{margin-bottom:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.ml-xl-' + index + ',.mx-xl-' + index + '{margin-left:' + (index * this.intervalInUnit) + this.unit + '!important;}';
+						}
+
+						if(this.padding) {
+							cssXS += '.p-' + index + '{padding:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pt-' + index + ',.py-' + index + '{padding-top:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pr-' + index + ',.px-' + index + '{padding-right:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pb-' + index + ',.py-' + index + '{padding-bottom:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pl-' + index + ',.px-' + index + '{padding-left:' + (index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssSM += '.p-sm-' + index + '{padding:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pt-sm-' + index + ',.py-sm-' + index + '{padding-top:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pr-sm-' + index + ',.px-sm-' + index + '{padding-right:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pb-sm-' + index + ',.py-sm-' + index + '{padding-bottom:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pl-sm-' + index + ',.px-sm-' + index + '{padding-left:' + (index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssMD += '.p-md-' + index + '{padding:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pt-md-' + index + ',.py-md-' + index + '{padding-top:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pr-md-' + index + ',.px-md-' + index + '{padding-right:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pb-md-' + index + ',.py-md-' + index + '{padding-bottom:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pl-md-' + index + ',.px-md-' + index + '{padding-left:' + (index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssLG += '.p-lg-' + index + '{padding:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pt-lg-' + index + ',.py-lg-' + index + '{padding-top:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pr-lg-' + index + ',.px-lg-' + index + '{padding-right:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pb-lg-' + index + ',.py-lg-' + index + '{padding-bottom:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pl-lg-' + index + ',.px-lg-' + index + '{padding-left:' + (index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssXL += '.p-xl-' + index + '{padding:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pt-xl-' + index + ',.py-xl-' + index + '{padding-top:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pr-xl-' + index + ',.px-xl-' + index + '{padding-right:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pb-xl-' + index + ',.py-xl-' + index + '{padding-bottom:' + (index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.pl-xl-' + index + ',.px-xl-' + index + '{padding-left:' + (index * this.intervalInUnit) + this.unit + '!important;}';
+						}
+						
+						if(this.negativeMargin) {
+							cssXS += '.m-n' + index + '{margin:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mt-n' + index + ',.my-n' + index + '{margin-top:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mr-n' + index + ',.mx-n' + index + '{margin-right:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mb-n' + index + ',.my-n' + index + '{margin-bottom:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.ml-n' + index + ',.mx-n' + index + '{margin-left:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssSM += '.m-sm-n' + index + '{margin:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mt-sm-n' + index + ',.my-sm-n' + index + '{margin-top:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mr-sm-n' + index + ',.mx-sm-n' + index + '{margin-right:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mb-sm-n' + index + ',.my-sm-n' + index + '{margin-bottom:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.ml-sm-n' + index + ',.mx-sm-n' + index + '{margin-left:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssMD += '.m-md-n' + index + '{margin:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mt-md-n' + index + ',.my-md-n' + index + '{margin-top:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mr-md-n' + index + ',.mx-md-n' + index + '{margin-right:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mb-md-n' + index + ',.my-md-n' + index + '{margin-bottom:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.ml-md-n' + index + ',.mx-md-n' + index + '{margin-left:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssLG += '.m-lg-n' + index + '{margin:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mt-lg-n' + index + ',.my-lg-n' + index + '{margin-top:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mr-lg-n' + index + ',.mx-lg-n' + index + '{margin-right:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mb-lg-n' + index + ',.my-lg-n' + index + '{margin-bottom:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.ml-lg-n' + index + ',.mx-lg-n' + index + '{margin-left:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}';
+
+							cssXL += '.m-xl-n' + index + '{margin:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mt-xl-n' + index + ',.my-xl-n' + index + '{margin-top:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mr-xl-n' + index + ',.mx-xl-n' + index + '{margin-right:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.mb-xl-n' + index + ',.my-xl-n' + index + '{margin-bottom:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}' +
+							'.ml-xl-n' + index + ',.mx-xl-n' + index + '{margin-left:' + (-1 * index * this.intervalInUnit) + this.unit + '!important;}';
+						}
+
+						if(this.autoMargin && index == this.iteration) {
+							cssXS += '.m-auto{margin:auto!important;}.mt-auto,.my-auto{margin-top:auto!important;}.mr-auto,.mx-auto{margin-right:auto!important;}.mb-auto,.my-auto{margin-bottom:auto!important;}.ml-auto,.mx-auto{margin-left:auto!important;}';
+							cssSM += '.m-sm-auto{margin:auto!important;}.mt-sm-auto,.my-sm-auto{margin-top:auto!important;}.mr-sm-auto,.mx-sm-auto{margin-right:auto!important;}.mb-sm-auto,.my-sm-auto{margin-bottom:auto!important;}.ml-sm-auto,.mx-sm-auto{margin-left:auto!important;}';
+							cssMD += '.m-md-auto{margin:auto!important;}.mt-md-auto,.my-md-auto{margin-top:auto!important;}.mr-md-auto,.mx-md-auto{margin-right:auto!important;}.mb-md-auto,.my-md-auto{margin-bottom:auto!important;}.ml-md-auto,.mx-md-auto{margin-left:auto!important;}';
+							cssLG += '.m-lg-auto{margin:auto!important;}.mt-lg-auto,.my-lg-auto{margin-top:auto!important;}.mr-lg-auto,.mx-lg-auto{margin-right:auto!important;}.mb-lg-auto,.my-lg-auto{margin-bottom:auto!important;}.ml-lg-auto,.mx-lg-auto{margin-left:auto!important;}';
+							cssXL += '.m-xl-auto{margin:auto!important;}.mt-xl-auto,.my-xl-auto{margin-top:auto!important;}.mr-xl-auto,.mx-xl-auto{margin-right:auto!important;}.mb-xl-auto,.my-xl-auto{margin-bottom:auto!important;}.ml-xl-auto,.mx-xl-auto{margin-left:auto!important;}';
+						}
+					}
+					cssSM += '}';
+					cssMD += '}';
+					cssLG += '}';
+					cssXL += '}';
+					return cssXS + cssSM + cssMD + cssLG + cssXL;
+				}
+			}
+		})
+	</script>
+</body>
+</html>
