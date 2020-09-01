@@ -71,7 +71,7 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							Generated CSS
+							Generated CSS <button @click="copyToClipboard" class="btn btn-primary" style="position:absolute;right:5px;top:5px;">copy</button>
 						</div>
 						<div class="card-body">
 							{{ generatedCSS }}
@@ -213,6 +213,30 @@
 					cssLG += '}';
 					cssXL += '}';
 					return cssXS + cssSM + cssMD + cssLG + cssXL;
+				}
+			},
+			methods: {
+				copyToClipboard: function() {
+					if (window.clipboardData && window.clipboardData.setData) {
+						return clipboardData.setData("Text", this.generatedCSS);
+					}
+					else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+						var textarea = document.createElement("textarea");
+						textarea.textContent = this.generatedCSS;
+						textarea.style.position = "fixed";
+						document.body.appendChild(textarea);
+						textarea.select();
+						try {
+							return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+						}
+						catch (ex) {
+							console.warn("Copy to clipboard failed.", ex);
+							return false;
+						}
+						finally {
+							document.body.removeChild(textarea);
+						}
+					}
 				}
 			}
 		})
